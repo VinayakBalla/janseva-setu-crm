@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JanSeva Setu | Citizen Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <ion-icon name="leaf"></ion-icon>
+            <span>JanSeva Setu</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Citizen Portal</a></li>
+            <li><a href="dashboard.html">Complaint Tracking Dashboard</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <header class="hero">
+            <h1>JanSeva Setu</h1>
+            <p>Digital Democracy Portal. Secure, transparent, and inclusive civic engagement.</p>
+        </header>
+
+        <!-- Authentication & Language Mockup -->
+        <section class="glass-card mb-4" style="margin-bottom: 2rem; text-align: center;">
+            <h2>Login or Register to Continue</h2>
+            <p style="margin-bottom: 1rem; color: #555;">Use any verified government ID or register anonymously.</p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1rem;">
+                <button class="btn-secondary" style="width: auto;"><ion-icon name="phone-portrait"></ion-icon> Mobile OTP</button>
+                <button class="btn-secondary" style="width: auto;"><ion-icon name="finger-print"></ion-icon> Aadhaar</button>
+                <button class="btn-secondary" style="width: auto;"><ion-icon name="mail"></ion-icon> Gmail</button>
+            </div>
+            <button class="btn-secondary" style="width: auto; margin: 0 auto; color: var(--danger); border-color: var(--danger);"><ion-icon name="incognito"></ion-icon> Submit Anonymous Complaint</button>
+        </section>
+
+        <section class="grid-layout">
+            <!-- Left Side: Report Form -->
+            <div class="glass-card form-section">
+                <h2><ion-icon name="megaphone-outline"></ion-icon> Report an Issue</h2>
+                <form id="reportForm">
+                    <div class="form-group">
+                        <label for="issueDesc">Describe the Problem (Or use Voice)</label>
+                        <div class="input-with-icon">
+                            <textarea id="issueDesc" rows="4" placeholder="E.g., Huge pothole near the main intersection causing traffic..." required></textarea>
+                            <button type="button" class="icon-btn voice-btn" title="Speak to report">
+                                <ion-icon name="mic-outline"></ion-icon>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="location">Location (Mandatory)</label>
+                            <div class="input-with-icon">
+                                <input type="text" id="location" placeholder="Address or tap GPS" required>
+                                <button type="button" class="icon-btn gps-btn" title="Use current location">
+                                    <ion-icon name="location-outline"></ion-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group upload-group">
+                        <label>Upload Evidence</label>
+                        <div class="upload-area">
+                            <ion-icon name="cloud-upload-outline"></ion-icon>
+                            <p>Drag & drop photos/videos or click to browse</p>
+                            <input type="file" id="evidence" accept="image/*,video/*" class="file-input">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary" id="submitBtn">
+                        <ion-icon name="arrow-forward-outline"></ion-icon>
+                        <span class="btn-text">Submit Report</span>
+                    </button>
+                    <!-- Loading State -->
+                    <div id="aiProcessing" class="hidden loading-state">
+                        <div class="spinner"></div>
+                        <p>AI is categorizing and routing your complaint...</p>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Right Side: Recent Reports -->
+            <div class="glass-card tracking-section">
+                <h2><ion-icon name="search-outline"></ion-icon> Track My Reports</h2>
+                <div class="search-box" style="display:flex; gap:10px;">
+                    <input type="text" placeholder="Enter Complaint ID or Phone Number" style="background:var(--secondary); border:1px solid #ccc; padding:0.8rem; border-radius:8px; width:100%;">
+                    <button class="btn-primary">Track</button>
+                </div>
+
+                <h3 style="margin-top: 2rem;">Recent Public Reports</h3>
+                <div class="report-feed" id="citizenFeed">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Geo-Democracy Section -->
+        <section class="glass-card mt-4" style="margin-top: 2rem;">
+            <h2><ion-icon name="map-outline"></ion-icon> Geo-Democracy & Neighborhood Info</h2>
+            <p style="color: #555;">Discover nearby government offices and track recent local developments.</p>
+            
+            <div class="grid-layout mt-4" style="gap: 1rem; margin-top:20px;">
+                <div style="flex:1;">
+                    <h4 style="color: var(--primary);">Nearby Offices & Officials</h4>
+                    <ul style="list-style: none; color: #555; margin-top: 1rem;">
+                        <li style="margin-bottom: 0.5rem;"><strong>Ward Councilor:</strong> Shri Ram Kumar (0.5 km)</li>
+                        <li style="margin-bottom: 0.5rem;"><strong>Water Board:</strong> Jal Board Div 4 (1.2 km)</li>
+                        <li style="margin-bottom: 0.5rem;"><strong>Local Police:</strong> Sector 9 Station (2.0 km)</li>
+                    </ul>
+                </div>
+                <div style="flex:1;">
+                    <h4 style="color: var(--primary);">Recent Area Projects</h4>
+                    <ul style="list-style: none; color: #555; margin-top: 1rem;">
+                        <li style="margin-bottom: 0.5rem;"><ion-icon name="checkmark-circle" style="color:var(--success)"></ion-icon> Main Road Repair - Budget: ₹15L</li>
+                        <li style="margin-bottom: 0.5rem;"><ion-icon name="hammer" style="color:var(--warning)"></ion-icon> Drainage Expansion - Budget: ₹45L</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="map-container">
+                [ Interactive Map Mockup - Dropped Pin: Your Location ]
+            </div>
+        </section>
+
+        <!-- JanMitra AI Assistant Widget -->
+        <div id="janMitraWidget" class="jan-mitra-widget">
+            <button id="chatbotToggle" class="jan-mitra-btn" title="Ask JanMitra AI for Help">
+                <ion-icon name="chatbubbles"></ion-icon>
+                <span class="jan-mitra-text">JanMitra Assist</span>
+            </button>
+
+            <div id="chatWindow" class="chat-window hidden">
+                <div class="chat-header">
+                    <div class="avatar-ring" id="avatarRing">
+                        <ion-icon name="happy"></ion-icon>
+                    </div>
+                    <div>
+                        <h4>JanMitra AI</h4>
+                        <p>Voice & Chat Guide</p>
+                    </div>
+                    <button id="closeChat" class="icon-btn close-btn"><ion-icon name="close"></ion-icon></button>
+                </div>
+                <div class="chat-body" id="chatBody">
+                    <div class="message bot">
+                        Namaste! I am JanMitra, your AI helper. How can I assist you today? You can say <strong>"report an issue"</strong> or <strong>"check status"</strong>.
+                    </div>
+                </div>
+                <div class="chat-footer">
+                    <button id="voiceInputBtn" class="mic-button" title="Tap to Speak"><ion-icon name="mic"></ion-icon></button>
+                    <input type="text" id="textInput" placeholder="Or type here...">
+                    <button id="sendBtn" class="send-btn"><ion-icon name="send"></ion-icon></button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Language Selection Modal -->
+    <div id="languageModal" class="modal-overlay">
+        <div class="modal-content">
+            <h2>Select Language <br><span style="font-size: 1rem; color: #555;">भाषा चुनें</span></h2>
+            <button class="lang-btn" onclick="document.getElementById('languageModal').classList.add('hidden')">English</button>
+            <button class="lang-btn" onclick="document.getElementById('languageModal').classList.add('hidden')">हिंदी (Hindi)</button>
+            <button class="lang-btn" onclick="document.getElementById('languageModal').classList.add('hidden')">मराठी (Marathi)</button>
+            <button class="lang-btn" onclick="document.getElementById('languageModal').classList.add('hidden')">தமிழ் (Tamil)</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

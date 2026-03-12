@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JanSeva Setu | Complaint Tracking</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body class="dashboard-body">
+
+    <nav class="navbar dashboard-nav">
+        <div class="logo">
+            <ion-icon name="shield-checkmark"></ion-icon>
+            <span>Complaint Tracking Dashboard</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Citizen Portal</a></li>
+            <li><a href="dashboard.html" class="active">Complaint Tracking Dashboard</a></li>
+        </ul>
+    </nav>
+
+    <main class="container dashboard-container">
+        <!-- Stats Overview -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="icon-wrap warning"><ion-icon name="alert-circle"></ion-icon></div>
+                <div>
+                    <h3>Pending</h3>
+                    <h2 id="pendingCount">0</h2>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="icon-wrap success"><ion-icon name="checkmark-circle"></ion-icon></div>
+                <div>
+                    <h3>Resolved</h3>
+                    <h2 id="resolvedCount">0</h2>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="icon-wrap primary"><ion-icon name="hardware-chip"></ion-icon></div>
+                <div>
+                    <h3>AI Assigned</h3>
+                    <h2 id="totalCount">0</h2>
+                </div>
+            </div>
+        </section>
+
+        <!-- Complaints Table/List -->
+        <section class="glass-card mt-4 table-section">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+                <h2>Incoming Issues (Assigned to You)</h2>
+                <div class="filters">
+                    <select id="statusFilter" style="background:#fafafa; border:1px solid #ccc; padding:0.5rem; border-radius:8px;">
+                        <option value="All">All Statuses</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Resolved">Resolved</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="dashboard-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Category (AI)</th>
+                            <th>Issue Description</th>
+                            <th>Location</th>
+                            <th>Assigned Officer (AI Routed)</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dashboardFeed">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- JanMitra AI Assistant Widget -->
+        <div id="janMitraWidget" class="jan-mitra-widget">
+            <button id="chatbotToggle" class="jan-mitra-btn" title="Ask JanMitra AI for Help">
+                <ion-icon name="chatbubbles"></ion-icon>
+                <span class="jan-mitra-text">JanMitra Assist</span>
+            </button>
+            <div id="chatWindow" class="chat-window hidden">
+                <div class="chat-header">
+                    <div class="avatar-ring" id="avatarRing"><ion-icon name="happy"></ion-icon></div>
+                    <div>
+                        <h4>JanMitra AI</h4>
+                        <p>Voice & Chat Guide</p>
+                    </div>
+                    <button id="closeChat" class="icon-btn close-btn"><ion-icon name="close"></ion-icon></button>
+                </div>
+                <div class="chat-body" id="chatBody">
+                    <div class="message bot">Namaste! I am JanMitra, your AI helper. How can I assist you today?</div>
+                </div>
+                <div class="chat-footer">
+                    <button id="voiceInputBtn" class="mic-button"><ion-icon name="mic"></ion-icon></button>
+                    <input type="text" id="textInput" placeholder="Or type here...">
+                    <button id="sendBtn" class="send-btn"><ion-icon name="send"></ion-icon></button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <script src="app.js"></script>
+</body>
+</html>
